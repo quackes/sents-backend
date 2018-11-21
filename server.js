@@ -32,7 +32,7 @@ app.get('/',(req, res)=>{
 app.put('/storage', (req, res) => {
     data =  req.body
     fs.writeFileSync(filename, JSON.stringify(data));
-    res.send(201);
+    res.json( data);
     wsBroadcast();
 });
 
