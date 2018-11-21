@@ -5,6 +5,7 @@ let express = require('express'),
     morgan = require('morgan');
 
 let app = express()
+expressWs(app)
 
 app.use(bodyParser.json())
 
@@ -32,11 +33,29 @@ app.put('/storage', (req, res) => {
     data =  req.body
     fs.writeFileSync(filename, JSON.stringify(data));
     res.send(201);
+    wsBroadcast();
 });
 
 app.get('/storage', (req, res) => {
-    res.send(data)
+    res.json( data);
 });
+
+let wsSessions = []
+
+app.ws('/storage', function(ws, req) {
+    wsSessions.push(ws)
+
+    ws.on('close', () => {
+        console.log('closed')
+         wsSessions.splice(wsSessions.indexOf(ws))
+    })
+});
+
+function wsBroadcast(){
+    setTimeout(()=> {
+       wsSessions.forEach((ws) => ws.send(JSON.stringify(data)));
+    },1)
+}
 
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
