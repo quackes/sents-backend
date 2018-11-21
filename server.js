@@ -1,12 +1,14 @@
 let express = require('express'),
     expressWs = require('express-ws'),
     bodyParser = require('body-parser'),
+    cors = require('cors')
     fs = require('fs')
     morgan = require('morgan');
 
 let app = express()
 expressWs(app)
 
+app.use(cors())
 app.use(bodyParser.json())
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 9000,
