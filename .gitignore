@@ -141,3 +141,4 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,vuejs,macos,windows
 
 .idea/
+data.json

@@ -1,6 +1,7 @@
 let express = require('express'),
     expressWs = require('express-ws'),
-    bodyParser = require('body-parser')
+    bodyParser = require('body-parser'),
+    fs = require('fs')
     morgan = require('morgan');
 
 let app = express()
@@ -12,12 +13,24 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 9000,
 
 let data = null;
 
+let storagePath = process.env.STORAGE_PATH || './'
+let filename = storagePath + 'data.json'
+
+if(fs.existsSync(filename)){
+    let dataString = fs.readFileSync(filename, 'utf8');
+    if (dataString) {
+        data = JSON.parse(dataString);
+    }
+}
+
 app.get('/',(req, res)=>{
     res.send('works')
 });
 
+
 app.put('/storage', (req, res) => {
     data =  req.body
+    fs.writeFileSync(filename, JSON.stringify(data));
     res.send(201);
 });
 
