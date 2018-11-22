@@ -58,9 +58,9 @@ app.ws('/storage', function(ws, req) {
     })
 });
 
-app.get('/triggerbroadcast',() =>{
+app.get('/triggerbroadcast',(req,res) =>{
     wsBroadcast();
-    send(200)
+    res.send(200)
 });
 
 function wsBroadcast(){
