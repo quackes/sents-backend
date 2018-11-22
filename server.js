@@ -24,6 +24,8 @@ if(fs.existsSync(filename)){
     if (dataString) {
         data = JSON.parse(dataString);
     }
+}else{
+    data = require('./data_default.json')
 }
 
 app.get('/',(req, res)=>{
