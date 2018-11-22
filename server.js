@@ -58,6 +58,10 @@ app.ws('/storage', function(ws, req) {
     })
 });
 
+app.get('/triggerbroadcast',() =>{
+    wsBroadcast();
+});
+
 function wsBroadcast(){
     setTimeout(()=> {
        wsSessions.forEach((ws) => ws.send(JSON.stringify(data)));
