@@ -60,6 +60,7 @@ app.ws('/storage', function(ws, req) {
 
 app.get('/triggerbroadcast',() =>{
     wsBroadcast();
+    send(200)
 });
 
 function wsBroadcast(){
