@@ -45,6 +45,9 @@ app.get('/storage', (req, res) => {
 let wsSessions = []
 
 app.ws('/storage', function(ws, req) {
+    ws.on('open',() => {
+        ws.send(JSON.stringify(data))
+    });
     wsSessions.push(ws)
 
     ws.on('close', () => {
